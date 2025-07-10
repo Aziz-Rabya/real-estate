@@ -1,4 +1,5 @@
 import Navbar from "./Navbar"
+import { motion } from "framer-motion";
 
 const Header = () => {
   return (
@@ -10,15 +11,25 @@ const Header = () => {
       <div className="container text-center items-center
        mx-auto py-4 px-6 md:px-20 
        lg:px32 text-white">
-        <h2 className="text-5xl sm:text-6xl
-         md:text-[82px] max-w-3xl
-          font-semibold pt-20 mx-auto">
+        <motion.h2 
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          className="text-5xl sm:text-6xl
+           md:text-[82px] max-w-3xl
+            font-semibold pt-20 mx-auto"
+        >
             Explore homes that fit your dreams
-        </h2>
-        <div className="space-x-6 mt-16">
+        </motion.h2>
+        <motion.div
+          initial={{ y: 30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="space-x-6 mt-16"
+        >
             <a href="#Projects" className="border border-white px-8 py-3 rounded">Projects</a>
             <a href="#Contact" className="bg-blue-500 px-8 py-3 rounded">Contact Us</a>
-        </div>
+        </motion.div>
       </div>
     </div>
   )

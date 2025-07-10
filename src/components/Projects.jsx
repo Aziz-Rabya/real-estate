@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
 import { assets, projectsData } from "../assets/assets"
+import { motion } from "framer-motion";
 
 const Projects = () => {
-
   const [currentIndex, setCurrentIndex] = useState(0);
   const [cardsToShow, setCardsToShow] = useState(1);
 
@@ -19,6 +19,7 @@ const Projects = () => {
       window.addEventListener('resize', updateCardsToShow);
       return ()=> window.removeEventListener('resize', updateCardsToShow);
   },[])
+
   const nextProject = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % projectsData.length);
   }
@@ -27,12 +28,20 @@ const Projects = () => {
   }
 
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 0.8 }}
+      viewport={{ once: true }}
       className="container mx-auto py-4 pt-20 px-6 md:px-20
     lg:px-32 my-20 w-full overflow-hidden"
       id="Projects"
     >
-      <h1
+      <motion.h1
+        initial={{ y: -20 }}
+        whileInView={{ y: 0 }}
+        transition={{ duration: 0.5 }}
+        viewport={{ once: true }}
         className="text-2xl sm:text-4xl
        font-bold mb-2 text-center"
       >
@@ -40,48 +49,74 @@ const Projects = () => {
         <span className="underline underline-offset-4 decoration-1 under font-light">
           Completed
         </span>
-      </h1>
-      <p
+      </motion.h1>
+      <motion.p
+        initial={{ y: -10 }}
+        whileInView={{ y: 0 }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+        viewport={{ once: true }}
         className="text-center
        text-gray-500 mb-8
         max-w-80 mx-auto"
       >
         Crafting Spaces, Building Legacies-Explore Our Portfolio
-      </p>
-
-      {/* slider buttons */}
+      </motion.p>
 
       <div className="flex justify-end items-center mb-8">
-        <button onClick={prevProject} className="p-3 bg-gray rounded mr-2" aria-label="Previous Project">
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          onClick={prevProject} 
+          className="p-3 bg-gray rounded mr-2" 
+          aria-label="Previous Project"
+        >
           <img src={assets.left_arrow} alt="Previus" />
-        </button>
-        <button onClick={nextProject} className="p-3 bg-gray rounded mr-2" aria-label="Next Project">
+        </motion.button>
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          onClick={nextProject} 
+          className="p-3 bg-gray rounded mr-2" 
+          aria-label="Next Project"
+        >
           <img src={assets.right_arrow} alt="Next" />
-        </button>
+        </motion.button>
       </div>
 
-      {/* project slider container */}
       <div className="overflow-hidden">
-        <div className="flex gap-8
-         transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${(currentIndex * 100) / cardsToShow}%)` }}>
+        <motion.div 
+          className="flex gap-8
+           transition-transform duration-500 ease-in-out" 
+          style={{ transform: `translateX(-${(currentIndex * 100) / cardsToShow}%)` }}
+        >
           {projectsData.map((project, index) => (
-            <div key={index} className="relative flex-shrink-0 w-full sm:w-1/4">
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              viewport={{ once: true }}
+              className="relative flex-shrink-0 w-full sm:w-1/4"
+            >
               <img src={project.image} alt={project.title} className="w-full h-auto mb-14"/>
               <div className="absolute left-0 bottom-5 flex justify-center">
-                  <div className="inline-block bg-white w-3/4 px-4 py-2 shadow-md">
+                  <motion.div 
+                    whileHover={{ scale: 1.05 }}
+                    className="inline-block bg-white w-3/4 px-4 py-2 shadow-md"
+                  >
                     <h2 className="text-xl font-semibold text-gray-800">
                       {project.title}
                     </h2>
                     <p className="text-gray-500 text-sm">
-                      {project.price} <span>|</span>  {project.location}
+                      {project.price} <span className="px-1">|</span>  {project.location}
                     </p>
-                  </div>
+                  </motion.div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
